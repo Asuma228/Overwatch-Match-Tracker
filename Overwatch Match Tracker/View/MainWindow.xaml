@@ -1,0 +1,72 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Overwatch_Match_Tracker" 
+        xmlns:view="clr-namespace:Overwatch_Match_Tracker.View" 
+        x:Class="Overwatch_Match_Tracker.View.MainWindow" 
+        d:DataContext="{d:DesignInstance Type={x:Type view:DataManageVM}}"
+        mc:Ignorable="d"
+        Style="{StaticResource ComposeFont}"
+        Title="Overwatch Match Tracker" Height="720" Width="1280">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0">
+            <TabItem x:Name="AddNewMatch">
+                <TabItem.Header>
+                    <TextBlock Text="Add New Match"/>
+                </TabItem.Header>
+                <StackPanel Grid.Row="0" 
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="250">
+                    <TextBlock Text="Queue Mode"/>
+                    <ComboBox x:Name="QueueModeBlock" ItemsSource="{Binding AllQueueModes}" DisplayMemberPath="Name" SelectedItem="{Binding MatchQueueMode}"/>
+                    <TextBlock Text="Result"/>
+                    <ComboBox x:Name="ResultBlock" ItemsSource="{Binding AllMatchResults}" DisplayMemberPath="Name" SelectedItem="{Binding MatchMatchResult}"/>
+                    <TextBlock Text="Heroes"/>
+                    <ComboBox x:Name="HeroesBlock" ItemsSource="{Binding AllHeroes}" DisplayMemberPath="Name" SelectedItem="{Binding MatchHero}"/>
+                    <TextBlock Text="Map"/>
+                    <ComboBox x:Name="MapBlock" ItemsSource="{Binding AllMaps}" DisplayMemberPath="Name" SelectedItem="{Binding MatchMap}"/>
+                    <TextBlock Text="Group Size"/>
+                    <ComboBox x:Name="GroupSizeBlock" ItemsSource="{Binding AllGroupSizes}" DisplayMemberPath="Name" SelectedItem="{Binding MatchGroupSize}"/>
+                    <TextBlock Text="Teammates"/>
+                    <ComboBox x:Name="TeammatesBlock" ItemsSource="{Binding AllTeammates}" DisplayMemberPath="BattleTag" SelectedItem="{Binding MatchTeammate}"/>
+                    <TextBlock Text="Rank Update"/>
+                    <TextBox x:Name="RankUpdate" Text="{Binding RankUpdate}"/>
+                    <Button Content="Add New Match" Command="{Binding AddNewMatch}"
+                />
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="MatchesTab">
+                <TabItem.Header>
+                    <TextBlock Text="Matches"/>
+                </TabItem.Header>
+                <ListView x:Name="ViewAllMatches" ItemsSource="{Binding AllMatches}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                            <GridViewColumn Header="Queue Mode" DisplayMemberBinding="{Binding MatchQueueMode.Name}"/>
+                            <GridViewColumn Header="Result" DisplayMemberBinding="{Binding MatchMatchResult.Name}"/>
+                            <GridViewColumn Header="Heroes" DisplayMemberBinding="{Binding MatchHero.Name}"/>
+                            <GridViewColumn Header="Map" DisplayMemberBinding="{Binding MatchMap.Name}"/>
+                            <GridViewColumn Header="Group Size" DisplayMemberBinding="{Binding MatchGroupSize.Name}"/>
+                            <GridViewColumn Header="Teammates" DisplayMemberBinding="{Binding MatchTeammate.BattleTag}"/>
+                            <GridViewColumn Header="RankUpdate" DisplayMemberBinding="{Binding RankUpdate}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    >
+            <Button Width="400" Content="Добавить элемент" Command="{Binding OpenAddNewElementWindow}"/>
+        </StackPanel>
+    </Grid>
+</Window>
